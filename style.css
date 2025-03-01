@@ -3,16 +3,15 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #f4f4f4; /* This is the background color you want */
+    color: #333; /* Default text color */
 }
 
-/* Navigation Bar */
+/* Navigation Bar Styling */
 nav {
-    background-color: #Ffc0cb;
+    background-color: #Ffc0cb; /* Pink background for the navbar */
     padding: 10px 0;
     text-align: center;
-    border: 2px solid #ddd;  /* Add border around nav */
 }
 
 nav ul {
@@ -37,18 +36,29 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #007BFF;
+    background-color: #007BFF; /* Hover color */
 }
 
-/* Table of Contents Box */
+/* Container (boxes around text) */
 .container {
     max-width: 600px;
     margin: 100px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
-    border: 2px solid #ddd;  /* Border around content */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow for the box */
+}
+
+/* Table of Contents Box */
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+p {
+    color: #666; /* Gray color for text */
 }
 
 /* Table Styling */
@@ -59,7 +69,7 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #ddd;  /* Border around table */
+    border: 1px solid #ddd; /* Border around table */
 }
 
 th, td {
@@ -68,10 +78,10 @@ th, td {
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Light background for headers */
 }
 
-/* Footer */
+/* Footer Styling */
 footer {
     background-color: #333;
     color: white;
