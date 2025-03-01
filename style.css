@@ -5,7 +5,6 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
-    text-align: center; /* Added to centralize text for consistency */
 }
 
 /* Navigation Bar */
@@ -13,7 +12,7 @@ nav {
     background-color: #Ffc0cb;
     padding: 10px 0;
     text-align: center;
-    border: 2px solid #ddd;  /* Border around nav */
+    border: 2px solid #ddd;  /* Add border around nav */
 }
 
 nav ul {
@@ -41,43 +40,16 @@ nav ul li a:hover {
     background-color: #007BFF;
 }
 
-/* Container (for Table of Contents, About, and Welcome Sections) */
+/* Table of Contents Box */
 .container {
     max-width: 600px;
     margin: 100px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow for the container */
-}
-
-/* Main Heading Styling */
-h1 {
-    font-family: 'Georgia', serif;
-    font-size: 36px;
-    font-weight: bold;
-    margin: 0;
-}
-
-/* Paragraph Styling */
-p {
-    color: #666;
-    line-height: 1.6; /* Makes paragraphs easier to read */
-}
-
-/* Button Styling */
-.btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.btn:hover {
-    background: #0056b3;
+    border: 2px solid #ddd;  /* Border around content */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
+    text-align: center;  /* Center text inside container */
 }
 
 /* Table Styling */
@@ -88,7 +60,7 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd;  /* Border around table */
 }
 
 th, td {
@@ -117,10 +89,30 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* Welcome Image Styling */
-.welcome-img {
-    border-radius: 10px;
+/* Welcome Page Specific Styling */
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+p {
+    color: #666;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
     margin-top: 20px;
-    max-width: 100%;
-    height: auto;
+    padding: 10px 20px;
+    background: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;  /* Ensure text is centered in the button */
+}
+
+.btn:hover {
+    background: #0056b3;
 }
