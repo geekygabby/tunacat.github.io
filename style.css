@@ -114,7 +114,7 @@ p {
 }
 
 .btn:hover {
-    background: #ffa089;
+    background: #FFA500; /* Button Color */
 }
 
 /* About Page Specific Styling */
