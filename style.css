@@ -242,6 +242,32 @@ p {
     padding: 0;
     margin: 0;
 }
+/* === The Quiz Page Style === */
+.quiz-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.question p {
+    font-weight: bold;
+    color: #333;
+}
+
+.result {
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 
 .references li {
     font-size: 18px;
