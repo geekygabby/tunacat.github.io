@@ -390,3 +390,16 @@ nav ul li a:hover {
     }
 }
 
+/* I ended up deciding to make the words smaller and not centered for these pages: apply to feedurcat.html and feedurdog.html */
+body {
+    text-align: left; /* This aligns text to the left */
+    font-size: 14px; /* This will make the text smaller */
+}
+
+.container {
+    text-align: left; /* This ensures the container's text is left-aligned */
+}
+
+h1 {
+    font-size: 28px; /* Lastly, this makes the title a little smaller */
+}
