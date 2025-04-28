@@ -392,12 +392,15 @@ nav ul li a:hover {
 
 /* I ended up deciding to make the words smaller */
 body {
-    font-size: 14px; /* This will make the text smaller */
-}
-.container {
-    text-align: center; /* This will center the text inside the container */
+    font-size: 14px; /* Smaller text */
+    text-align: center; /* Centering all content */
 }
 
 h1 {
-    font-size: 28px; /* Lastly, this makes the title a little smaller */
+    font-size: 28px; /* Making the header smaller */
+    text-align: center; /* Ensuring the heading is centered */
+}
+
+.container {
+    text-align: center; /* Centering the content inside the container */
 }
