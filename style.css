@@ -394,7 +394,9 @@ nav ul li a:hover {
 body {
     font-size: 14px; /* This will make the text smaller */
 }
-
+.container {
+    text-align: center; /* This will center the text inside the container */
+}
 
 h1 {
     font-size: 28px; /* Lastly, this makes the title a little smaller */
