@@ -157,3 +157,18 @@ footer {
     }
 }
 
+/* Container for main content */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #007BFF;  /* Blue background */
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+    gap: 10px;  /* Space between elements */
+}
+
