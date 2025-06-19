@@ -1,1 +1,99 @@
+/* ========== RESET / BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #000;
+    line-height: 1.6;
+}
+
+/* ========== GLOBAL VARIABLES ========== */
+:root {
+    --blue: #007BFF;
+    --black: #000000;
+    --light-gray: #f4f4f4;
+    --white: #ffffff;
+}
+
+/* ========== GLOBAL ELEMENTS ========== */
+a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+/* ========== HEADER ========== */
+header {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 20px;
+    text-align: center;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+/* ========== BOXES ========== */
+.box {
+    background-color: var(--blue);
+    color: var(--white);
+    width: 250px;
+    min-height: 150px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== FOOTER ========== */
+footer {
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .box {
+        width: 90%;
+    }
+}
 
