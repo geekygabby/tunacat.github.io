@@ -1,3 +1,4 @@
+/* === CSS RESET === */
 * {
     margin: 0;
     padding: 0;
@@ -11,17 +12,18 @@ html, body {
     line-height: 1.6;
 }
 
-/* global variables */
+/* === GLOBAL COLOR VARIABLES === */
 :root {
     --green: #28a745;
+    --link-color: #0056b3; /* new: blue-ish link color */
     --black: #000000;
     --light-gray: #f4f4f4;
     --white: #ffffff;
 }
 
-/* global elements */
+/* === GLOBAL ELEMENTS === */
 a {
-    color: var(--green);
+    color: var(--link-color);
     text-decoration: none;
 }
 
@@ -38,7 +40,7 @@ p {
     margin-bottom: 15px;
 }
 
-/* header */
+/* === HEADER === */
 header {
     background-color: var(--black);
     color: var(--white);
@@ -46,7 +48,7 @@ header {
     text-align: center;
 }
 
-/* a container */
+/* === FLEX CONTAINER === */
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -55,7 +57,7 @@ header {
     padding: 40px 20px;
 }
 
-/* some boxes for design */
+/* === BOX DESIGN === */
 .box {
     background-color: var(--green);
     color: var(--white);
@@ -73,7 +75,7 @@ header {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* page footer */
+/* === FOOTER === */
 footer {
     background-color: var(--black);
     color: var(--white);
@@ -84,7 +86,7 @@ footer {
     bottom: 0;
 }
 
-/* making it responsive */
+/* === RESPONSIVE === */
 @media (max-width: 600px) {
     .container {
         flex-direction: column;
@@ -96,9 +98,9 @@ footer {
     }
 }
 
-/* navigation bar */
+/* === NAVIGATION BAR === */
 .navbar {
-    background-color: #000; /* black background */
+    background-color: var(--black);
     padding: 15px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -116,7 +118,7 @@ footer {
 }
 
 .logo {
-    color: var(--green); /* green accent */
+    color: var(--green);
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
@@ -129,21 +131,21 @@ footer {
 }
 
 .nav-links li a {
-    color: #fff;
+    color: var(--white);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
 }
 
 .nav-links li a:hover {
-    color: var(--green); /* green hover */
+    color: var(--green);
 }
 
-/* Responsive behavior */
+/* === MOBILE NAV === */
 @media (max-width: 600px) {
     .nav-links {
         flex-direction: column;
-        background-color: #000;
+        background-color: var(--black);
         position: absolute;
         top: 60px;
         right: 0;
@@ -156,17 +158,16 @@ footer {
     }
 }
 
-/* Container for main content */
+/* === STYLED MAIN CONTENT CONTAINER === */
 .container {
-    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background-color: var(--green);  /* Green background */
-    color: white;
+    background-color: var(--green);
+    color: var(--white);
     padding: 30px;
     border-radius: 10px;
     max-width: 800px;
     margin: 40px auto;
-    gap: 10px;  /* Space between elements */
+    gap: 10px;
 }
