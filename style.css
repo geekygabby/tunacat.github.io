@@ -13,7 +13,7 @@ html, body {
 
 /* global variables */
 :root {
-    --blue: #007BFF;
+    --green: #28a745;
     --black: #000000;
     --light-gray: #f4f4f4;
     --white: #ffffff;
@@ -21,7 +21,7 @@ html, body {
 
 /* global elements */
 a {
-    color: var(--blue);
+    color: var(--green);
     text-decoration: none;
 }
 
@@ -57,7 +57,7 @@ header {
 
 /* some boxes for design */
 .box {
-    background-color: var(--blue);
+    background-color: var(--green);
     color: var(--white);
     width: 250px;
     min-height: 150px;
@@ -116,7 +116,7 @@ footer {
 }
 
 .logo {
-    color: #007BFF; /* blue accent */
+    color: var(--green); /* green accent */
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
@@ -136,7 +136,7 @@ footer {
 }
 
 .nav-links li a:hover {
-    color: #007BFF; /* blue hover */
+    color: var(--green); /* green hover */
 }
 
 /* Responsive behavior */
@@ -162,7 +162,7 @@ footer {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background-color: #007BFF;  /* Blue background */
+    background-color: var(--green);  /* Green background */
     color: white;
     padding: 30px;
     border-radius: 10px;
@@ -170,4 +170,3 @@ footer {
     margin: 40px auto;
     gap: 10px;  /* Space between elements */
 }
-
