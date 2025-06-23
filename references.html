@@ -1,47 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Reference and Links Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reference and Links Page</title>
+
+  <!-- my css for style and neatness -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --green: #28a745;
+      --black: #000;
+      --white: #fff;
+      --light-gray: #f4f4f4;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-gray);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    h1, h2 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p, li {
+      margin-bottom: 15px;
+    }
+
+    /* navigation bar design */
+    .navbar {
+      background-color: var(--black);
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .nav-links li a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links li a:hover {
+      color: var(--green);
+    }
+
+    /* The header section design */
+    .page-header {
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+      background-color: var(--white);
+    }
+
+    /* references section */
+    .references.container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: var(--white);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .references h2 {
+      margin-bottom: 15px;
+    }
+
+    .references ul {
+      padding-left: 20px;
+    }
+
+    /* the footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: var(--black);
+      color: var(--white);
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: var(--green);
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="milestone1.html">Milestone 1</a></li>
-            <li><a href="references.html">References & Links</a></li>
-        </ul>
-    </nav>
+  <!-- navigation bar -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="milestone1.html">Milestone 1</a></li>
+      <li><a href="references.html">References & Links</a></li>
+    </ul>
+  </nav>
 
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Reference Page</h1>
-        <p>Below are the references used to complete this project</p>
-    </header>
+  <!-- page header -->
+  <header class="page-header">
+    <h1>Reference Page</h1>
+    <p>Below are the references used to complete this project</p>
+  </header>
 
-    <!-- References Section -->
-    <section class="references container">
-        <h2>Websites</h2>
-        <ul>
-            <li>
-                <strong>Kennesaw State University Website</strong>. 
-                <em>Course Information</em>. 
-                <a href="http://ccse.kennesaw.edu/it" target="_blank" rel="noopener noreferrer">[Visit Website]</a>
-            </li>
-        </ul>
-    </section>
+  <!-- the references section -->
+  <section class="references container">
+    <h2>Websites</h2>
+    <ul>
+      <li>
+        <strong>Kennesaw State University Website</strong>. 
+        <em>Course Information</em>. 
+        <a href="http://ccse.kennesaw.edu/it" target="_blank" rel="noopener noreferrer">[Visit Website]</a>
+      </li>
+    </ul>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>
-            Created by Gabrielle Williams - 
-            <a href="mailto:inquiretunacat@gmail.com">[Contact]</a>
-        </p>
-    </footer>
+  <!-- the footer -->
+  <footer>
+    <p>
+      Created by Gabrielle Williams - 
+      <a href="mailto:inquiretunacat@gmail.com">[Contact]</a>
+    </p>
+  </footer>
 
 </body>
 </html>
