@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -91,6 +91,7 @@
       padding: 15px;
       background-color: #1c1c1c;
       border-radius: 8px;
+      text-align: left;
     }
 
     .book img {
@@ -172,4 +173,14 @@
           <div class="book">
             <h3>${info.title}</h3>
             <p><strong>Authors:</strong> ${info.authors?.join(", ") || "N/A"}</p>
+            <p><strong>Publisher:</strong> ${info.publisher || "N/A"}</p>
+            <img src="${info.imageLinks?.thumbnail || ""}" alt="${info.title}" />
+            <p>${info.description ? info.description.substring(0, 200) + "..." : "No description available."}</p>
+          </div>
+        `);
+      });
+    });
+  </script>
 
+</body>
+</html>
