@@ -3,42 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Milestone 1 – Single Book Display</title>
+  <title>Milestone 1 – Single Book</title>
 
-  <!-- The link to my global CSS -->
-  <link rel="stylesheet" href="style.css">
+  <!-- the embedded CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --green: #28a745;
+      --black: #000;
+      --white: #fff;
+      --light-gray: #f4f4f4;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--light-gray);
+      color: #000;
+    }
+
+    header {
+      background-color: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: var(--white);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: var(--green);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      margin-top: 15px;
+      max-width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: var(--black);
+      color: var(--white);
+      margin-top: 40px;
+    }
+  </style>
 
   <!-- jQuery CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="logo">TunaCat Project</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="references.html">References</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
 
   <header>
-    <h1>Milestone 1: Display a Single Book (Google Books API)</h1>
+    <h1>Milestone 1: Display a Single Book</h1>
   </header>
 
   <div class="container">
-    <p>This page uses jQuery to fetch and display a single book from the Google Books API.</p>
+    <p>This page uses jQuery to fetch and display one book from the Google Books API.</p>
     <div id="book-display">Loading book data...</div>
   </div>
 
   <footer>
-    Created by Gabrielle Williams — Milestone 1
+    Created by Gabrielle Williams – Milestone 1
   </footer>
 
-  <!-- jQuery fetch script with error handling -->
+  <!-- embedded JavaScript -->
   <script>
     $(document).ready(function () {
       $.getJSON("https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC")
