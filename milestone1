@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milestone 1 – Single Book Display</title>
+
+  <!-- Global stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Milestone 1: Display a Single Book (Google Books API)</h1>
+  </header>
+
+  <div class="container">
+    <p>This page uses jQuery to fetch and display a single book from the Google Books API.</p>
+    <div id="book-display">Loading book data...</div>
+  </div>
+
+  <footer>
+    Created by Gabrielle Williams — Milestone 1
+  </footer>
+
+  <!-- jQuery to fetch book data -->
+  <script>
+    $(document).ready(function () {
+      $.getJSON("https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC", function (data) {
+        const book = data.volumeInfo;
+
+        const html = `
+          <h2>${book.title}</h2>
+          <p><strong>Author(s):</strong> ${book.authors?.join(', ') || 'Unknown'}</p>
+          <p><strong>Publisher:</strong> ${book.publisher || 'Not available'}</p>
+          <p><strong>Published:</strong> ${book.publishedDate || 'N/A'}</p>
+          <p><strong>Description:</strong> ${book.description ||
