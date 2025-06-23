@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Milestone 1 – Single Book Display</title>
 
-  <!-- Global stylesheet -->
+  <!-- Link to your global CSS -->
   <link rel="stylesheet" href="style.css">
 
   <!-- jQuery CDN -->
@@ -26,15 +26,32 @@
     Created by Gabrielle Williams — Milestone 1
   </footer>
 
-  <!-- jQuery to fetch book data -->
+  <!-- jQuery fetch script with error handling -->
   <script>
     $(document).ready(function () {
-      $.getJSON("https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC", function (data) {
-        const book = data.volumeInfo;
+      $.getJSON("https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC")
+        .done(function (data) {
+          const book = data.volumeInfo;
 
-        const html = `
-          <h2>${book.title}</h2>
-          <p><strong>Author(s):</strong> ${book.authors?.join(', ') || 'Unknown'}</p>
-          <p><strong>Publisher:</strong> ${book.publisher || 'Not available'}</p>
-          <p><strong>Published:</strong> ${book.publishedDate || 'N/A'}</p>
-          <p><strong>Description:</strong> ${book.description ||
+          const html = `
+            <h2>${book.title}</h2>
+            <p><strong>Author(s):</strong> ${book.authors?.join(', ') || 'Unknown'}</p>
+            <p><strong>Publisher:</strong> ${book.publisher || 'Not available'}</p>
+            <p><strong>Published:</strong> ${book.publishedDate || 'N/A'}</p>
+            <p><strong>Description:</strong> ${book.description || 'No description available.'}</p>
+            <a href="${book.previewLink}" target="_blank">Read Preview</a><br>
+            ${book.imageLinks?.thumbnail ? `<img src="${book.imageLinks.thumbnail}" alt="Book Cover">` : ''}
+          `;
+
+          $("#book-display").html(html);
+        })
+        .fail(function (jqxhr, textStatus, error) {
+          const errMsg = `Request Failed: ${textStatus}, ${error}`;
+          $("#book-display").html(`<p style="color: red;">${errMsg}</p>`);
+          console.error("Book fetch failed:", errMsg);
+        });
+    });
+  </script>
+
+</body>
+</html>
