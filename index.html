@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reference and Links Page</title>
+  <title>Advanced Web Development Milestones - Gabrielle Williams</title>
 
-  <!-- my css for style and neatness -->
+  <!-- Embedded CSS -->
   <style>
     * {
       margin: 0;
@@ -23,7 +23,7 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--light-gray);
-      color: var(--black);
+      color: var(--white);
       line-height: 1.6;
     }
 
@@ -36,27 +36,45 @@
       text-decoration: underline;
     }
 
-    h1, h2 {
+    h1, h2, h3 {
       margin-bottom: 10px;
       font-weight: 600;
     }
 
-    p, li {
+    p {
       margin-bottom: 15px;
     }
 
-    /* the navigation bar design */
+    /* the navigation bar */
     .navbar {
       background-color: var(--black);
       padding: 15px 0;
-      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: var(--green);
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
     }
 
     .nav-links {
       list-style: none;
       display: flex;
-      justify-content: center;
-      gap: 30px;
+      gap: 25px;
     }
 
     .nav-links li a {
@@ -70,84 +88,85 @@
       color: var(--green);
     }
 
-    /* page header */
-    .page-header {
-      text-align: center;
-      padding: 40px 20px 20px 20px;
-      background-color: var(--black);
-      color: var(--white);
+    /* Responsive Navigation */
+    @media (max-width: 600px) {
+      .nav-links {
+        flex-direction: column;
+        background-color: var(--black);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        display: none;
+      }
+
+      .navbar.active .nav-links {
+        display: flex;
+      }
     }
 
-    /* content container */
-    .content-box {
-      max-width: 800px;
-      margin: 30px auto;
+    /* main container */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
       background: var(--black);
-      color: var(--white);
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .content-box h2 {
-      color: var(--green);
+    section ul {
+      margin-top: 10px;
+      margin-left: 20px;
     }
 
-    .content-box a {
-      color: var(--green);
-    }
-
-    /* the footer */
-    footer {
-      text-align: center;
-      padding: 15px;
-      background-color: var(--black);
-      color: var(--white);
-      margin-top: 40px;
-    }
-
-    footer a {
-      color: var(--green);
+    section ul li {
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
-  <!-- navigation bar -->
+  <!-- the navigation bar -->
   <nav class="navbar">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="milestone1.html">Milestone 1</a></li>
-      <li><a href="references.html">References & Links</a></li>
-    </ul>
+    <div class="nav-container">
+      <a href="index.html" class="logo">TunaCat Project</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="milestone1.html">Milestone 1</a></li>
+        <li><a href="references.html">References</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <!-- the page header -->
-  <header class="page-header">
-    <h1>Reference Page</h1>
-    <p>Below are the references used to complete this project</p>
-  </header>
+  <!-- main content -->
+  <main class="container">
 
-  <!-- the main content -->
-  <section class="content-box">
-    <h2>Websites</h2>
-    <ul>
-      <li>
-        <strong>Kennesaw State University Website</strong>.
-        <em>Course Information</em>.
-        <a href="http://ccse.kennesaw.edu/it" target="_blank" rel="noopener noreferrer">[Visit Website]</a>
-      </li>
-    </ul>
-  </section>
+    <h1>Advanced Web Development Milestones</h1>
+    <h2>Gabrielle Williams</h2>
+    <p><strong>Affiliation:</strong> Kennesaw State University</p>
+    <p><strong>Project Overview:</strong> This site contains four milestones documenting my progress through advanced web development topics.</p>
+    <p>This project is a multi-part exploration of contemporary web development techniques using several languages and methods: HTML, CSS, JavaScript, and jQuery.</p>
+    <p>The website contains four milestones, each building upon the last to demonstrate progressive use and integration of client-side technologies.</p>
 
-  <!-- the footer -->
-  <footer>
-    <p>
-      Created by Gabrielle Williams -
-      <a href="mailto:inquiretunacat@gmail.com">[Contact]</a>
-    </p>
-  </footer>
+    <section>
+      <h3>Course Information</h3>
+      <p>
+        This project is part of the <a href="http://ccse.kennesaw.edu/it" target="_blank" rel="noopener noreferrer">KSU IT College Program</a>.
+      </p>
+    </section>
+
+    <section>
+      <h3>Table of Contents</h3>
+      <ul>
+        <li><a href="milestone1.html">Milestone 1</a></li>
+        <li><a href="milestone2.html">Milestone 2</a></li>
+        <li><a href="milestone3.html">Milestone 3</a></li>
+        <li><a href="milestone4.html">Milestone 4</a></li>
+      </ul>
+    </section>
+
+  </main>
 
 </body>
 </html>
-
