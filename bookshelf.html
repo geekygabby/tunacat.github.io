@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Bookshelf | TunaCat Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #000;
+      text-align: center;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background-color: #000;
+      padding: 15px 0;
+    }
+    nav a {
+      color: #28a745;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #000;
+      color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #28a745;
+    }
+    .book {
+      background-color: #1c1c1c;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    .book img {
+      max-width: 100px;
+      display: block;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="mainmenu.html">Home</a> | 
+    <a href="bookshelf.html">My Bookshelf</a>
+  </nav>
+
+  <main>
+    <h1>My Public Bookshelf</h1>
+    <div id="bookshelf"></div>
+  </main>
+
+  <script>
+    const userId = "YOUR_GOOGLE_USER_ID";
+    const shelfId = "YOUR_SHELF_ID";
+
+    const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${shelfId}/volumes`;
+
+    $.getJSON(url, function(data) {
+      const books = data.items || [];
+      if (books.length === 0) {
+        $("#bookshelf").html("<p>No books found on your public shelf.</p>");
+        return;
+      }
+
+      books.forEach(book => {
+        const info = book.volumeInfo;
+        $("#bookshelf").append(`
+          <div class="book">
+            <a href="book.html?id=${book.id}"><h3>${info.title}</h3></a>
+            <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover" />
+          </div>
+        `);
+      });
+    });
+  </script>
+
+</body>
+</html>
 
