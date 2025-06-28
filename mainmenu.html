@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Main Menu | TunaCat Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
 
+  <nav>
+    <a href="mainmenu.html">Home</a> | 
+    <a href="bookshelf.html">My Bookshelf</a>
+  </nav>
+
+  <main>
+    <h1>Search for Books</h1>
+    <input type="text" id="searchTerm" placeholder="Enter keywords..." />
+    <button id="searchBtn">Search</button>
+
+    <div id="results"></div>
+    <div id="pagination"></div>
+  </main>
+
+  <script>
+    let currentResults = [];
+
+    function displayResults(start, perPage) {
+      $("#results").empty();
+      const slice = currentResults.slice(start, start + perPage);
+      slice.forEach(book => {
+        const info = book.volumeInfo;
+        $("#results").append(`
+          <div class="book">
+            <a href="book.html?id=${book.id}"><h3>${info.title}</h3></a>
+            <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover" />
+          </div>
+        `);
+      });
+    }
+
+    function createPagination(perPage) {
+      const pageCount = Math.ceil(currentResults.length / perPage);
+      let options = '';
+      for (let i = 0; i < pageCount; i++) {
+        options += `<option value="${i}">Page ${i + 1}</option>`;
+      }
+      $("#pagination").html(`
+        <label for="pageSelect">Go to page:</label>
+        <select id="pageSelect">${options}</select>
+      `);
+      $("#pageSelect").on("change", function () {
+        const pageIndex = parseInt($(this).val()) || 0;
+        displayResults(pageIndex * perPage, perPage);
+      });
+    }
+
+    $("#searchBtn").on("click", function () {
+      const term = $("#searchTerm").val().trim();
+      if (!term) return alert("Please enter a search term.");
+
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(term)}&maxResults=40`;
+
+      $.getJSON(url, function (data) {
+        currentResults = data.items || [];
+        if (currentResults.length === 0) {
+          $("#results").html("<p>No books found.</p>");
+          $("#pagination").empty();
+          return;
+        }
+        displayResults(0, 10);
+        createPagination(10);
+      });
+    });
+  </script>
+
+</body>
+</html>
