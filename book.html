@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Book Details | TunaCat Library</title>
+  <title>Book Details | Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
@@ -39,61 +39,76 @@
     h1 {
       color: #28a745;
     }
-    img {
-      max-width: 200px;
-      margin: 20px 0;
-    }
-    .detail {
+    .book-details {
       text-align: left;
       margin-top: 20px;
+    }
+    .book-details img {
+      float: right;
+      margin-left: 20px;
+      max-width: 150px;
+    }
+    .field {
+      margin-bottom: 15px;
+    }
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="index.html">Home</a> | 
-    <a href="bookshelf.html">My Bookshelf</a>
+    <a href="mainmenu.html">Home</a> | 
+    <a href="bookshelf.html">My Bookshelf</a> | 
     <a href="book.html">Book</a>
   </nav>
 
   <main>
     <h1>Book Details</h1>
-    <div id="book-details">Loading...</div>
+    <div id="book"></div>
   </main>
 
+  <footer>
+    <p>Created by Gabrielle Williams | <a href="mailto:inquiretunacat@gmail.com" style="color: #28a745;">Contact</a></p>
+  </footer>
+
   <script>
-    function getQueryParam(name) {
+    function getBookIdFromUrl() {
       const params = new URLSearchParams(window.location.search);
-      return params.get(name);
+      return params.get("id");
     }
 
-    const bookId = getQueryParam("id");
+    const bookId = getBookIdFromUrl();
 
-    if (bookId) {
+    if (!bookId) {
+      $("#book").html("<p>No book ID provided in the URL.</p>");
+    } else {
       const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
 
       $.getJSON(url, function(data) {
-        const book = data.volumeInfo;
-        $("#book-details").html(`
-          <h2>${book.title}</h2>
-          <p><strong>Authors:</strong> ${book.authors?.join(", ") || "N/A"}</p>
-          <p><strong>Publisher:</strong> ${book.publisher || "N/A"}</p>
-          <p><strong>Published:</strong> ${book.publishedDate || "N/A"}</p>
-          <img src="${book.imageLinks?.thumbnail || ''}" alt="${book.title}" />
-          <div class="detail">
-            <p><strong>Description:</strong> ${book.description || "No description available."}</p>
-            <p><strong>Page Count:</strong> ${book.pageCount || "N/A"}</p>
-            <p><strong>Categories:</strong> ${book.categories?.join(", ") || "N/A"}</p>
-            <p><strong>Average Rating:</strong> ${book.averageRating || "N/A"}</p>
+        const info = data.volumeInfo;
+
+        $("#book").html(`
+          <div class="book-details">
+            <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover image">
+            <h2>${info.title}</h2>
+            <div class="field"><strong>Authors:</strong> ${info.authors?.join(", ") || "N/A"}</div>
+            <div class="field"><strong>Publisher:</strong> ${info.publisher || "N/A"}</div>
+            <div class="field"><strong>Published Date:</strong> ${info.publishedDate || "N/A"}</div>
+            <div class="field"><strong>Page Count:</strong> ${info.pageCount || "N/A"}</div>
+            <div class="field"><strong>Categories:</strong> ${info.categories?.join(", ") || "N/A"}</div>
+            <div class="field"><strong>Description:</strong><br><p>${info.description || "No description available."}</p></div>
           </div>
         `);
+      }).fail(function() {
+        $("#book").html("<p>Error retrieving book details. Please try again later.</p>");
       });
-    } else {
-      $("#book-details").text("No book ID provided.");
     }
   </script>
 
 </body>
 </html>
-
