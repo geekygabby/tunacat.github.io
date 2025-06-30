@@ -55,8 +55,8 @@
 <body>
 
   <nav>
-    <a href="index.html">Home</a> | 
-    <a href="bookshelf.html">My Bookshelf</a>
+    <a href="mainmenu.html">Home</a> | 
+    <a href="bookshelf.html">My Bookshelf</a> | 
     <a href="book.html">Book</a>
   </nav>
 
@@ -66,34 +66,31 @@
   </main>
 
   <script>
-  const userId = "105264473097913072854";
-  const shelfId = "0";
-  const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${shelfId}/volumes`;
+    const userId = "105264473097913072854";
+    const shelfId = "1001";
+    const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${shelfId}/volumes`;
 
+    $.getJSON(url, function(data) {
+      const books = data.items || [];
+      if (books.length === 0) {
+        $("#bookshelf").html("<p>No books found on your public shelf.</p>");
+        return;
+      }
 
-$.getJSON(url, function(data) {
-  const books = data.items || [];
-  if (books.length === 0) {
-    $("#bookshelf").html("<p>No books found on your public shelf.</p>");
-    return;
-  }
-
-  books.forEach(book => {
-    const info = book.volumeInfo;
-    $("#bookshelf").append(`
-      <div class="book">
-        <a href="book.html?id=${book.id}"><h3>${info.title}</h3></a>
-        <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover" />
-      </div>
-    `);
-  });
-}).fail(function(jqxhr, status, error) {
-  $("#bookshelf").html(`<p>Error loading bookshelf: ${status} – ${error}</p>`);
-  console.error("Bookshelf load error:", status, error);
-});
-
+      books.forEach(book => {
+        const info = book.volumeInfo;
+        $("#bookshelf").append(`
+          <div class="book">
+            <a href="book.html?id=${book.id}"><h3>${info.title}</h3></a>
+            <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover" />
+          </div>
+        `);
+      });
+    }).fail(function(jqxhr, status, error) {
+      $("#bookshelf").html(`<p>Error loading bookshelf: ${status} – ${error}</p>`);
+      console.error("Bookshelf load error:", status, error);
+    });
   </script>
 
 </body>
 </html>
-
