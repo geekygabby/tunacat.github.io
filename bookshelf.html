@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>My Bookshelf | TunaCat Library</title>
+  <title>My Bookshelf | Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
@@ -66,10 +66,10 @@
   </main>
 
   <script>
-    const userId = "YOUR_GOOGLE_USER_ID";
-    const shelfId = "YOUR_SHELF_ID";
+  const userId = "105264473097913072854";
+  const shelfId = "0";
+  const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${shelfId}/volumes`;
 
-    const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${shelfId}/volumes`;
 
     $.getJSON(url, function(data) {
       const books = data.items || [];
