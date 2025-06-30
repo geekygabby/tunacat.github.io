@@ -74,7 +74,7 @@
     $.getJSON(url, function(data) {
       const books = data.items || [];
       if (books.length === 0) {
-        $("#bookshelf").html("<p>No books found on your public shelf.</p>");
+        $("#bookshelf").html("<p>No books have been found on this public bookshelf.</p>");
         return;
       }
 
