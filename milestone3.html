@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Milestone 3 | Book App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #000;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    nav {
+      background-color: #000;
+      padding: 15px 0;
+    }
+    nav a {
+      color: #28a745;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .section {
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    h2 {
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 60%;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .results, .bookshelf, .details {
+      margin-top: 20px;
+    }
+    .book {
+      background-color: #1c1c1c;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+    .book img {
+      max-width: 80px;
+      display: block;
+      margin: 10px auto;
+    }
+    .pagination {
+      margin: 20px 0;
+    }
+    .pagination button {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="mainmenu.html">Home</a> |
+    <a href="bookshelf.html">My Bookshelf</a> |
+    <a href="milestone3.html">Milestone 3</a>
+  </nav>
+
+  <main>
+    <!-- Book Search -->
+    <div class="section">
+      <h2>Search Books</h2>
+      <input type="text" id="searchInput" placeholder="Enter keywords..." />
+      <button id="searchBtn">Search</button>
+      <div class="results" id="searchResults"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Book Details -->
+    <div class="section">
+      <h2>Book Details</h2>
+      <div id="bookDetails" class="details">Click a book title to view details.</div>
+    </div>
+
+    <!-- My Bookshelf -->
+    <div class="section">
+      <h2>My Bookshelf</h2>
+      <div class="bookshelf" id="bookshelf"></div>
+    </div>
+  </main>
+
+  <script>
+    const maxResults = 10;
+    let currentQuery = '';
+    let fullResults = [];
+
+    // Search Button Click
+    $('#searchBtn').on('click', function () {
+      const query = $('#searchInput').val().trim();
+      if (!query) return;
+      currentQuery = query;
+      fetchSearchResults(query);
+    });
+
+    function fetchSearchResults(query) {
+      $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=40`, function (data) {
+        fullResults = data.items || [];
+        renderPage(1);
+        setupPagination(Math.ceil(fullResults.length / maxResults));
+      });
+    }
+
+    function renderPage(page) {
+      const start = (page - 1) * maxResults;
+      const end = start + maxResults;
+      const pageItems = fullResults.slice(start, end);
+
+      $('#searchResults').empty();
+      pageItems.forEach(book => {
+        const info = book.volumeInfo;
+        $('#searchResults').append(`
+          <div class="book">
+            <a href="#" class="book-link" data-id="${book.id}"><h3>${info.title}</h3></a>
+            <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover" />
+          </div>
+        `);
+      });
+    }
+
+    function setupPagination(pages) {
+      $('#pagination').empty();
+      for (let i = 1; i <= pages; i++) {
+        $('#pagination').append(`<button class="page-btn" data-page="${i}">${i}</button>`);
+      }
+    }
+
+    $(document).on('click', '.page-btn', function () {
+      const page = parseInt($(this).data('page'));
+      renderPage(page);
+    });
+
+    // Show book details from search
+    $(document).on('click', '.book-link', function (e) {
+      e.preventDefault();
+      const id = $(this).data('id');
+      $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}`, function (book) {
+        const info = book.volumeInfo;
+        $('#bookDetails').html(`
+          <h3>${info.title}</h3>
+          <p><strong>Authors:</strong> ${info.authors?.join(", ") || "N/A"}</p>
+          <p><strong>Publisher:</strong> ${info.publisher || "N/A"}</p>
+          <p><strong>Description:</strong> ${info.description || "No description available."}</p>
+          <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover image" />
+        `);
+      });
+    });
+
+    // Load bookshelf from favorites.json
+    $.getJSON("favorites.json", function (books) {
+      books.forEach(book => {
+        $('#bookshelf').append(`
+          <div class="book">
+            <a href="#" class="book-link" data-id="${book.id}"><h3>${book.title}</h3></a>
+            <img src="${book.thumbnail}" alt="${book.title}" />
+          </div>
+        `);
+      });
+    });
+  </script>
+
+</body>
+</html>
