@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Gabrielle's Bookshelf | Library</title>
+  <title>My Bookshelf | Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
@@ -55,41 +55,33 @@
 <body>
 
   <nav>
-    <a href="index.html">Home</a> | 
-    <a href="mainmenu.html">Search</a> | 
+    <a href="mainmenu.html">Home</a> | 
     <a href="bookshelf.html">My Bookshelf</a> | 
     <a href="book.html">Book</a>
   </nav>
 
   <main>
-    <h1>My Bookshelf</h1>
+    <h1>My Custom Bookshelf</h1>
     <div id="bookshelf"></div>
   </main>
 
   <script>
-    const userId = "105264473097913072854";
-    const shelfId = "1001";
-    const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${shelfId}/volumes`;
-
-    $.getJSON(url, function(data) {
-      const books = data.items || [];
-      if (books.length === 0) {
-        $("#bookshelf").html("<p>No books have been found on this public bookshelf.</p>");
+    $.getJSON("favorites.json", function(data) {
+      if (!data.length) {
+        $("#bookshelf").html("<p>No books found in your favorites list.</p>");
         return;
       }
 
-      books.forEach(book => {
-        const info = book.volumeInfo;
+      data.forEach(book => {
         $("#bookshelf").append(`
           <div class="book">
-            <a href="book.html?id=${book.id}"><h3>${info.title}</h3></a>
-            <img src="${info.imageLinks?.thumbnail || ''}" alt="Cover" />
+            <a href="book.html?id=${book.id}"><h3>${book.title}</h3></a>
+            <img src="${book.thumbnail}" alt="Cover of ${book.title}" />
           </div>
         `);
       });
     }).fail(function(jqxhr, status, error) {
-      $("#bookshelf").html(`<p>Error loading bookshelf: ${status} – ${error}</p>`);
-      console.error("Bookshelf load error:", status, error);
+      $("#bookshelf").html(`<p>Error loading your bookshelf: ${status} - ${error}</p>`);
     });
   </script>
 
