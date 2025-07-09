@@ -88,22 +88,21 @@
   </nav>
 
   <main>
-    <!-- Book Search -->
+
     <div class="section">
-      <h2>Search Books</h2>
+      <h2>Search for Books</h2>
       <input type="text" id="searchInput" placeholder="Enter keywords..." />
       <button id="searchBtn">Search</button>
       <div class="results" id="searchResults"></div>
       <div class="pagination" id="pagination"></div>
     </div>
 
-    <!-- Book Details -->
+
     <div class="section">
       <h2>Book Details</h2>
-      <div id="bookDetails" class="details">Click a book title to view details.</div>
+      <div id="bookDetails" class="details">Click on the book title to view the book details.</div>
     </div>
 
-    <!-- My Bookshelf -->
     <div class="section">
       <h2>My Bookshelf</h2>
       <div class="bookshelf" id="bookshelf"></div>
@@ -115,7 +114,6 @@
     let currentQuery = '';
     let fullResults = [];
 
-    // Search Button Click
     $('#searchBtn').on('click', function () {
       const query = $('#searchInput').val().trim();
       if (!query) return;
@@ -160,7 +158,6 @@
       renderPage(page);
     });
 
-    // Show book details from search
     $(document).on('click', '.book-link', function (e) {
       e.preventDefault();
       const id = $(this).data('id');
@@ -176,7 +173,6 @@
       });
     });
 
-    // Load bookshelf from favorites.json
     $.getJSON("favorites.json", function (books) {
       books.forEach(book => {
         $('#bookshelf').append(`
