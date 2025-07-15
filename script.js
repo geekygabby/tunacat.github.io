@@ -22,7 +22,6 @@ $(document).ready(function () {
 
   function showBookDetails(bookId) {
     const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
-
     $.getJSON(url, function (data) {
       const info = {
         title: data.volumeInfo.title,
@@ -31,7 +30,6 @@ $(document).ready(function () {
         thumbnail: data.volumeInfo.imageLinks?.thumbnail || "",
         description: data.volumeInfo.description || "No description available."
       };
-
       const template = $("#template-book-detail").html();
       const html = Mustache.render(template, info);
       $("#bookDetailContainer").html(html);
@@ -41,7 +39,6 @@ $(document).ready(function () {
   function searchBooks(query, page = 1) {
     const startIndex = (page - 1) * resultsPerPage;
     const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=${resultsPerPage}`;
-
     $.getJSON(url, function (data) {
       renderBooks(data.items || [], "#searchResults", "book-item");
       renderPagination(data.totalItems || 0);
@@ -51,7 +48,6 @@ $(document).ready(function () {
   function renderPagination(totalItems) {
     const totalPages = Math.min(Math.ceil(totalItems / resultsPerPage), 5);
     const pagination = $("#searchPagination").empty();
-
     for (let i = 1; i <= totalPages; i++) {
       const btn = $("<button>").text(i).on("click", function () {
         currentPage = i;
@@ -73,26 +69,24 @@ $(document).ready(function () {
   $("#tab-search").on("click", function () {
     $("#search-section").show();
     $("#bookshelf-section").hide();
-    $("#tab-search").addClass("active");
+    $(this).addClass("active");
     $("#tab-bookshelf").removeClass("active");
   });
 
   $("#tab-bookshelf").on("click", function () {
     $("#search-section").hide();
     $("#bookshelf-section").show();
-    $("#tab-bookshelf").addClass("active");
+    $(this).addClass("active");
     $("#tab-search").removeClass("active");
     loadBookshelf();
   });
 
   $("#toggleGrid").on("click", function () {
     $("#searchResults").removeClass("list").addClass("grid");
-    currentView = "grid";
   });
 
   $("#toggleList").on("click", function () {
     $("#searchResults").removeClass("grid").addClass("list");
-    currentView = "list";
   });
 
   $("#toggleGridBookshelf").on("click", function () {
