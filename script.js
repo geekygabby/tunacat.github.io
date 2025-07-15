@@ -7,8 +7,6 @@ $(document).ready(function () {
   function renderBooks(data, containerId, templateName) {
     const container = $(containerId);
     container.empty();
-
-    // Load template once, synchronously
     const template = $("#template-" + templateName).html();
 
     data.forEach(book => {
