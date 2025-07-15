@@ -4,13 +4,12 @@ $(document).ready(function () {
   let currentPage = 1;
   let currentQuery = "";
 
-function loadTemplate(name) {
-  return Promise.resolve($("#template-" + name).html());
-}
-
   function renderBooks(data, containerId, templateName) {
     const container = $(containerId);
     container.empty();
+
+    // Load template once, synchronously
+    const template = $("#template-" + templateName).html();
 
     data.forEach(book => {
       const info = {
@@ -18,11 +17,8 @@ function loadTemplate(name) {
         title: book.volumeInfo?.title || "No Title",
         thumbnail: book.volumeInfo?.imageLinks?.thumbnail || ""
       };
-
-      loadTemplate(templateName).then(template => {
-        const html = Mustache.render(template, info);
-        container.append(html);
-      });
+      const html = Mustache.render(template, info);
+      container.append(html);
     });
   }
 
@@ -38,10 +34,9 @@ function loadTemplate(name) {
         description: data.volumeInfo.description || "No description available."
       };
 
-      loadTemplate("book-detail").then(template => {
-        const html = Mustache.render(template, info);
-        $("#bookDetailContainer").html(html);
-      });
+      const template = $("#template-book-detail").html();
+      const html = Mustache.render(template, info);
+      $("#bookDetailContainer").html(html);
     });
   }
 
