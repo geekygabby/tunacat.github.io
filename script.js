@@ -4,9 +4,9 @@ $(document).ready(function () {
   let currentPage = 1;
   let currentQuery = "";
 
-  function loadTemplate(name) {
-    return $.get(`templates/${name}.mustache`);
-  }
+function loadTemplate(name) {
+  return Promise.resolve($("#template-" + name).html());
+}
 
   function renderBooks(data, containerId, templateName) {
     const container = $(containerId);
