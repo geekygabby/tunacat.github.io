@@ -9,7 +9,7 @@
       background-color: #ffffff;
       color: #000000;
       font-family: Arial, sans-serif;
-      padding: 40px;
+      padding: 20px;
       margin: 0;
     }
 
@@ -18,44 +18,158 @@
       border-bottom: 3px solid #ff66b2;
       padding-bottom: 10px;
       margin-bottom: 20px;
+      text-align: center;
     }
 
-    .content {
-      max-width: 800px;
-      margin: auto;
+    input, button, select {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #0066cc;
+      color: white;
+      cursor: pointer;
+    }
+
+    .movie {
       border: 2px solid #ff66b2;
-      padding: 20px;
       border-radius: 12px;
+      margin: 10px 0;
+      padding: 10px;
+      display: flex;
+      gap: 15px;
       background-color: #f9f9f9;
     }
 
-    .highlight {
-      color: #0066cc;
-      font-weight: bold;
+    .movie img {
+      width: 100px;
+      height: 150px;
+      object-fit: cover;
     }
 
-    .accent {
+    .movie h3 {
+      margin: 0;
+      color: #0066cc;
+    }
+
+    .movie button {
+      margin-top: 5px;
+      background-color: #ff3399;
+    }
+
+    #favorites {
+      margin-top: 40px;
+    }
+
+    .section-title {
       color: #ff3399;
+      margin-top: 40px;
+      border-bottom: 2px dashed #0066cc;
+      padding-bottom: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="content">
-    <h1>Movie Discovery App</h1>
-    <p>
-      For this project, we will develop a <span class="highlight">single-page web application</span> that allows users to search and discover <span class="accent">movies</span> and <span class="accent">TV shows</span> using various methods such as keywords or genre-based search.
-    </p>
-    <p>
-      The app will include features such as <span class="highlight">sorting</span> and <span class="highlight">filtering</span> to enhance the browsing experience. Users will be able to view <span class="accent">popular</span> or <span class="accent">trending titles</span> and access detailed information for each one.
-    </p>
-    <p>
-      The goal of this project is to create an <span class="highlight">interactive platform</span> for movie/TV discovery while giving users the ability to manage <span class="highlight">personalized watchlists</span> and <span class="highlight">favorites</span>.
-      These lists will be saved using the movie’s API authentication and data management features.
-    </p>
-    <p>
-      We will also aim to explore additional UI enhancements and extended functionalities supported by the API. One of our most important goals is to provide a <span class="highlight">smooth</span> and <span class="highlight">engaging experience</span> for users.
-    </p>
+  <h1>Movie Discovery App</h1>
+
+  <div>
+    <input type="text" id="searchInput" placeholder="Search for movies or TV shows..." />
+    <button onclick="search()">Search</button>
   </div>
+
+  <div id="results">
+    <h2 class="section-title">Popular Titles</h2>
+    <div id="movieList"></div>
+  </div>
+
+  <div id="favorites">
+    <h2 class="section-title">Your Watchlist</h2>
+    <div id="watchlist"></div>
+  </div>
+
+  <script>
+    const apiKey = 'YOUR_TMDB_API_KEY'; // Replace with your TMDb API key
+    const imgBase = 'https://image.tmdb.org/t/p/w200';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPopular();
+      loadWatchlist();
+    });
+
+    function search() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) return;
+
+      fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => displayMovies(data.results, 'movieList'));
+    }
+
+    function loadPopular() {
+      fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}`)
+        .then(res => res.json())
+        .then(data => displayMovies(data.results, 'movieList'));
+    }
+
+    function displayMovies(movies, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      movies.forEach(movie => {
+        const title = movie.title || movie.name || 'Untitled';
+        const poster = movie.poster_path ? `${imgBase}${movie.poster_path}` : '';
+        const id = movie.id;
+
+        const div = document.createElement('div');
+        div.className = 'movie';
+        div.innerHTML = `
+          <img src="${poster}" alt="${title}" />
+          <div>
+            <h3>${title}</h3>
+            <p>${movie.overview || 'No description available.'}</p>
+            <button onclick="addToWatchlist(${id}, '${title.replace(/'/g, "\\'")}', '${poster}')">Add to Watchlist</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addToWatchlist(id, title, poster) {
+      const list = JSON.parse(localStorage.getItem('watchlist')) || [];
+      if (!list.some(item => item.id === id)) {
+        list.push({ id, title, poster });
+        localStorage.setItem('watchlist', JSON.stringify(list));
+        loadWatchlist();
+      }
+    }
+
+    function removeFromWatchlist(id) {
+      let list = JSON.parse(localStorage.getItem('watchlist')) || [];
+      list = list.filter(item => item.id !== id);
+      localStorage.setItem('watchlist', JSON.stringify(list));
+      loadWatchlist();
+    }
+
+    function loadWatchlist() {
+      const container = document.getElementById('watchlist');
+      const list = JSON.parse(localStorage.getItem('watchlist')) || [];
+      container.innerHTML = '';
+
+      list.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'movie';
+        div.innerHTML = `
+          <img src="${item.poster}" alt="${item.title}" />
+          <div>
+            <h3>${item.title}</h3>
+            <button onclick="removeFromWatchlist(${item.id})">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
 </body>
 </html>
-
