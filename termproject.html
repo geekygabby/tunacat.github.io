@@ -21,7 +21,7 @@
       text-align: center;
     }
 
-    input, button, select {
+    input, button {
       padding: 8px;
       margin: 5px;
       border: 1px solid #ccc;
@@ -73,15 +73,15 @@
   </style>
 </head>
 <body>
-  <h1>Movie Discovery App</h1>
+  <h1>Your Favorite Place to Discover Movies</h1>
 
   <div>
-    <input type="text" id="searchInput" placeholder="Search for movies or TV shows..." />
+    <input type="text" id="searchInput" placeholder="Search for movies..." />
     <button onclick="search()">Search</button>
   </div>
 
   <div id="results">
-    <h2 class="section-title">Popular Titles</h2>
+    <h2 class="section-title">Search Results</h2>
     <div id="movieList"></div>
   </div>
 
@@ -91,36 +91,30 @@
   </div>
 
   <script>
-    const apiKey = 'YOUR_TMDB_API_KEY'; // Replace with your TMDb API key
-    const imgBase = 'https://image.tmdb.org/t/p/w200';
-
-    document.addEventListener('DOMContentLoaded', () => {
-      loadPopular();
-      loadWatchlist();
-    });
+    const demoKey = 'demo';
 
     function search() {
       const query = document.getElementById('searchInput').value.trim();
       if (!query) return;
 
-      fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(query)}`)
+      fetch(`https://www.omdbapi.com/?apikey=${demoKey}&s=${encodeURIComponent(query)}`)
         .then(res => res.json())
-        .then(data => displayMovies(data.results, 'movieList'));
-    }
-
-    function loadPopular() {
-      fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}`)
-        .then(res => res.json())
-        .then(data => displayMovies(data.results, 'movieList'));
+        .then(data => {
+          if (data.Response === "True") {
+            displayMovies(data.Search, 'movieList');
+          } else {
+            document.getElementById('movieList').innerHTML = `<p>No results found.</p>`;
+          }
+        });
     }
 
     function displayMovies(movies, containerId) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
       movies.forEach(movie => {
-        const title = movie.title || movie.name || 'Untitled';
-        const poster = movie.poster_path ? `${imgBase}${movie.poster_path}` : '';
-        const id = movie.id;
+        const title = movie.Title;
+        const poster = movie.Poster !== 'N/A' ? movie.Poster : '';
+        const id = movie.imdbID;
 
         const div = document.createElement('div');
         div.className = 'movie';
@@ -128,8 +122,8 @@
           <img src="${poster}" alt="${title}" />
           <div>
             <h3>${title}</h3>
-            <p>${movie.overview || 'No description available.'}</p>
-            <button onclick="addToWatchlist(${id}, '${title.replace(/'/g, "\\'")}', '${poster}')">Add to Watchlist</button>
+            <p>Year: ${movie.Year}</p>
+            <button onclick="addToWatchlist('${id}', '${title.replace(/'/g, "\\'")}', '${poster}')">Add to Watchlist</button>
           </div>
         `;
         container.appendChild(div);
@@ -164,12 +158,14 @@
           <img src="${item.poster}" alt="${item.title}" />
           <div>
             <h3>${item.title}</h3>
-            <button onclick="removeFromWatchlist(${item.id})">Remove</button>
+            <button onclick="removeFromWatchlist('${item.id}')">Remove</button>
           </div>
         `;
         container.appendChild(div);
       });
     }
+
+    document.addEventListener('DOMContentLoaded', loadWatchlist);
   </script>
 </body>
 </html>
