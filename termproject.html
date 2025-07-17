@@ -73,7 +73,7 @@
   </style>
 </head>
 <body>
-  <h1>Your Favorite Place to Discover Movies</h1>
+  <h1>Movie Discovery App</h1>
 
   <div>
     <input type="text" id="searchInput" placeholder="Search for movies..." />
@@ -91,13 +91,13 @@
   </div>
 
   <script>
-    const demoKey = 'demo';
+    const apiKey = '78f176d9';
 
     function search() {
       const query = document.getElementById('searchInput').value.trim();
       if (!query) return;
 
-      fetch(`https://www.omdbapi.com/?apikey=${demoKey}&s=${encodeURIComponent(query)}`)
+      fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(query)}`)
         .then(res => res.json())
         .then(data => {
           if (data.Response === "True") {
