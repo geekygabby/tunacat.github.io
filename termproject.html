@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Discovery App</title>
+  <title>Movie Discovery App (TMDb)</title>
   <style>
     body {
       background-color: #ffffff;
@@ -21,7 +21,7 @@
       text-align: center;
     }
 
-    input, button {
+    input, button, select {
       padding: 8px;
       margin: 5px;
       border: 1px solid #ccc;
@@ -60,10 +60,6 @@
       background-color: #ff3399;
     }
 
-    #favorites {
-      margin-top: 40px;
-    }
-
     .section-title {
       color: #ff3399;
       margin-top: 40px;
@@ -76,8 +72,11 @@
   <h1>Your favorite place to discover movies...</h1>
 
   <div>
-    <input type="text" id="searchInput" placeholder="Search for movies..." />
+    <input type="text" id="searchInput" placeholder="Search for movies or shows..." />
     <button onclick="search()">Search</button>
+    <select id="genreSelect" onchange="discoverByGenre()">
+      <option value="">Discover by Genre</option>
+    </select>
   </div>
 
   <div id="results">
@@ -86,35 +85,49 @@
   </div>
 
   <div id="favorites">
+    <h2 class="section-title">Your Favorites</h2>
+    <div id="favoriteList"></div>
+  </div>
+
+  <div id="watchlist">
     <h2 class="section-title">Your Watchlist</h2>
-    <div id="watchlist"></div>
+    <div id="watchlistList"></div>
   </div>
 
   <script>
-    const apiKey = '78f176d9';
+    const apiKey = 'c0a93aa1fadf925343373103c313d848';
+    const imgBase = 'https://image.tmdb.org/t/p/w200';
+    let genreMap = {};
 
     function search() {
       const query = document.getElementById('searchInput').value.trim();
       if (!query) return;
 
-      fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(query)}`)
+      fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(query)}`)
         .then(res => res.json())
         .then(data => {
-          if (data.Response === "True") {
-            displayMovies(data.Search, 'movieList');
-          } else {
-            document.getElementById('movieList').innerHTML = `<p>No results found.</p>`;
-          }
+          const results = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
+          displayMovies(results, 'movieList');
         });
+    }
+
+    function discoverByGenre() {
+      const genreId = document.getElementById("genreSelect").value;
+      if (!genreId) return;
+
+      fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`)
+        .then(res => res.json())
+        .then(data => displayMovies(data.results, 'movieList'));
     }
 
     function displayMovies(movies, containerId) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
+
       movies.forEach(movie => {
-        const title = movie.Title;
-        const poster = movie.Poster !== 'N/A' ? movie.Poster : '';
-        const id = movie.imdbID;
+        const title = movie.title || movie.name || 'Untitled';
+        const poster = movie.poster_path ? `${imgBase}${movie.poster_path}` : '';
+        const id = movie.id;
 
         const div = document.createElement('div');
         div.className = 'movie';
@@ -122,8 +135,9 @@
           <img src="${poster}" alt="${title}" />
           <div>
             <h3>${title}</h3>
-            <p>Year: ${movie.Year}</p>
+            <p>Year: ${(movie.release_date || movie.first_air_date || '').split('-')[0]}</p>
             <button onclick="addToWatchlist('${id}', '${title.replace(/'/g, "\\'")}', '${poster}')">Add to Watchlist</button>
+            <button onclick="addToFavorites('${id}', '${title.replace(/'/g, "\\'")}', '${poster}')">Add to Favorites</button>
           </div>
         `;
         container.appendChild(div);
@@ -147,7 +161,7 @@
     }
 
     function loadWatchlist() {
-      const container = document.getElementById('watchlist');
+      const container = document.getElementById('watchlistList');
       const list = JSON.parse(localStorage.getItem('watchlist')) || [];
       container.innerHTML = '';
 
@@ -165,7 +179,62 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', loadWatchlist);
+    function addToFavorites(id, title, poster) {
+      const list = JSON.parse(localStorage.getItem('favorites')) || [];
+      if (!list.some(item => item.id === id)) {
+        list.push({ id, title, poster });
+        localStorage.setItem('favorites', JSON.stringify(list));
+        loadFavorites();
+      }
+    }
+
+    function removeFromFavorites(id) {
+      let list = JSON.parse(localStorage.getItem('favorites')) || [];
+      list = list.filter(item => item.id !== id);
+      localStorage.setItem('favorites', JSON.stringify(list));
+      loadFavorites();
+    }
+
+    function loadFavorites() {
+      const container = document.getElementById('favoriteList');
+      const list = JSON.parse(localStorage.getItem('favorites')) || [];
+      container.innerHTML = '';
+
+      list.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'movie';
+        div.innerHTML = `
+          <img src="${item.poster}" alt="${item.title}" />
+          <div>
+            <h3>${item.title}</h3>
+            <button onclick="removeFromFavorites('${item.id}')">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function loadGenres() {
+      fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
+        .then(res => res.json())
+        .then(data => {
+          genreMap = {};
+          const select = document.getElementById("genreSelect");
+          data.genres.forEach(genre => {
+            genreMap[genre.name] = genre.id;
+            const option = document.createElement("option");
+            option.value = genre.id;
+            option.textContent = genre.name;
+            select.appendChild(option);
+          });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGenres();
+      loadWatchlist();
+      loadFavorites();
+    });
   </script>
 </body>
 </html>
